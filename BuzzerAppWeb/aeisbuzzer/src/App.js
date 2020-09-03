@@ -1,17 +1,41 @@
 import React from 'react';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
 import './App.css';
+import Home from './Home';
+import LoginModerador from './LoginModerador';
+import LoginJugador from './LoginJugador';
+import VistaModerador from './VistaModerador';
+import VistaJugador from './VistaJugador';
 
 function App() {
   return (
-    <div className="app">
-      <div className="jumbotron" id="content">
-						<h1 id="title">AEIS's Buzzer App</h1>
-						<hr/>
-						<a href="/loginModerador" class="btn btn-info">Moderador</a>
-						<br/>
-						<a href="/loginJugador" class="btn btn-info">Jugador</a>
-			</div>
-    </div>
+    <Router>
+      <div className="app">
+        <Switch>
+          <Route path="/">
+            <Home/>
+          </Route>
+          <Route path="/loginModerador">
+            <LoginModerador/>
+          </Route>
+          <Route path="/loginJugador">
+            <LoginJugador/>
+          </Route>
+          <Route path="/vistaModerador">
+            <VistaModerador/>
+          </Route>
+          <Route path="/vistaJugador">
+            <VistaJugador/>
+          </Route>
+        </Switch>
+      </div>
+    </Router>
+    
   );
 }
 

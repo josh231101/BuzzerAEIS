@@ -1,5 +1,5 @@
 import React from 'react'
-import 'loginModerador.css'
+import './loginModerador.css'
 function loginModerador() {
 	return (
 		<div className="container">

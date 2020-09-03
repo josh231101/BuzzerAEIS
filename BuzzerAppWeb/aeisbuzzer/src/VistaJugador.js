@@ -1,5 +1,5 @@
 import React from 'react'
-import 'vistaJugador.css'
+import './vistaJugador.css'
 
 function vistaJugador() {
 	return (

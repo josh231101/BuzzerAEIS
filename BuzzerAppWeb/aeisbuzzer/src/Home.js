@@ -1,14 +1,19 @@
 import React from 'react';
 import './Home.css';
+import {Link} from "react-router-dom";
 
 function Home() {
     return (
         <div className="jumbotron" id="content">
             <h1 id="title">AEIS's Buzzer App</h1>
             <hr/>
-            <a href="/loginModerador" class="btn btn-info">Moderador</a>
+            <Link to="/loginModerador" className="btn btn-info">
+                Moderador
+            </Link>
             <br/>
-            <a href="/loginJugador" class="btn btn-info">Jugador</a>
+            <Link to="/loginJugador" className="btn btn-info">
+                Jugador
+            </Link>
         </div>
     )
 }

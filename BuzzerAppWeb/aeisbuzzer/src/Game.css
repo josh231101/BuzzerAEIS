@@ -9,30 +9,31 @@
     display: flex;
     align-content: center;
     justify-content: center;
-    width: 30rem;
-    height : 30rem;
+    width: 20rem;
+    height : 20rem;
+    border-radius: 100%;
+    background-color: black;
 
 }
 .button{
-    width: 100%;
+    width: 80%;
+    height: 80%;
     display: block;
-    float: left;
+    margin-top: -20px;
     border-radius:100%;
-    margin: 10px 0px 10px 0px;
-    padding:15px 0px;
     text-align:center;
     text-decoration:none;
     font: 14px "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: #ecf0f1;
+    box-shadow: 10px 10px 10px 10px rgba(0,0,0,0.88);
   }
   .button:active{
     position:relative;
-    top:6px;
+    top:20px;
   }
   .red{
-    box-shadow: 0px 6px #c0392b;
+    box-shadow: 0px 28px #c0392b;
     background: #e74c3c;
-  
   }
   .red:active{
     box-shadow: 0px 0px #c0392b;
@@ -40,7 +41,7 @@
   }
   .blue{
     background: #3498db;
-    box-shadow: 0px 6px #2980b9;
+    box-shadow: 0px 28px #2980b9;
   }
   .blue:active{
     background: #2980b9;
@@ -48,7 +49,7 @@
   }
   
   .green{
-    box-shadow: 0px 20px #27ae60;
+    box-shadow: 0px 28px #27ae60;
     background: #2ecc71;
   }
   .green:active{

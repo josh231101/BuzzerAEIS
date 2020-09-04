@@ -11,6 +11,7 @@ import LoginModerador from './LoginModerador';
 import LoginJugador from './LoginJugador';
 import VistaModerador from './VistaModerador';
 import VistaJugador from './VistaJugador';
+import Game from './Game';
 
 function App() {
   return (
@@ -29,6 +30,9 @@ function App() {
           </Route>
           <Route path="/vistaJugador">
             <VistaJugador/>
+          </Route>
+          <Route path="/game/:id">
+            <Game />
           </Route>
         </Switch>
       </div>

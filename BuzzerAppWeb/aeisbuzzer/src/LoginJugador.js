@@ -1,7 +1,20 @@
-import React from 'react'
-import "./loginJugador.css"
+import React,{useState} from 'react';
+import {useHistory} from 'react-router-dom';
+import "./loginJugador.css";
 
-function loginJugador() {
+function LoginJugador() {
+	const history = useHistory();
+	const [gameId, setGameId] = useState('');
+	const [playerName, setPlayerName] = useState('');
+	const [playerTeam, setPlayerTeam] = useState('');
+
+
+
+	const submitPlayer = (e) =>{
+		e.preventDefault();
+		console.log(gameId, playerName,playerTeam);
+		history.push('/game/'+gameId)
+	}
 	return (		
 		<div className="container">
 			<div className="row">
@@ -9,12 +22,25 @@ function loginJugador() {
 					<div class="jumbotron" id="content">
 						<h1 id="title">AEIS's Buzzer App</h1>
 						<hr/>
-						<form action="/loginJugador" method="post">
-							<input placeHolder="Id del Juego" name="_idgame" autofocus required="true"></input>
+						<form onSubmit={submitPlayer}>
+							<input 
+								placeHolder="Id del Juego" 
+								name="_idgame" 
+								autofocus required
+								value={gameId} 
+								onChange={(e)=>setGameId(e.target.value)}>
+							</input>
 							<br/>
-							<input placeHolder="Nombre" name="playername" required="true"></input>
+							<input 
+								placeHolder="Nombre" 
+								name="playername" 
+								required={true}
+								value={playerName} 
+								onChange={(e)=>setPlayerName(e.target.value)}>
+
+							</input>
 							<br/>
-							<select name="userteam">
+							<select name="userteam" onChange={(e)=> setPlayerTeam(e.target.value)} required>
 								<option value="" disabled selected >Equipo</option>
 								<option>Equipo Rojo</option>
 								<option>Equipo Verde</option>
@@ -29,4 +55,4 @@ function loginJugador() {
 	)
 }
 
-export default loginJugador
+export default LoginJugador

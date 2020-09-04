@@ -1,8 +1,10 @@
 import React,{useState} from 'react';
 import {useHistory} from 'react-router-dom';
 import "./loginJugador.css";
+import {useStateValue} from './StateProvider'
 
 function LoginJugador() {
+	const [{user}, dispatch] = useStateValue()
 	const history = useHistory();
 	const [gameId, setGameId] = useState('');
 	const [playerName, setPlayerName] = useState('');
@@ -13,6 +15,11 @@ function LoginJugador() {
 	const submitPlayer = (e) =>{
 		e.preventDefault();
 		console.log(gameId, playerName,playerTeam);
+		dispatch({
+			type : 'SET_USER',
+			user : {id : gameId, player : playerName, team : playerTeam}
+		})
+		console.log(user)
 		history.push('/game/'+gameId)
 	}
 	return (		

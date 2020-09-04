@@ -20,7 +20,7 @@ function LoginJugador() {
 			user : {id : gameId, player : playerName, team : playerTeam}
 		})
 		console.log(user)
-		history.push('/game/'+gameId)
+		history.push(`/game/${gameId}`)
 	}
 	return (		
 		<div className="container">

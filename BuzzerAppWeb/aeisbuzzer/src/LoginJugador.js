@@ -1,10 +1,11 @@
 import React,{useState} from 'react';
 import {useHistory} from 'react-router-dom';
 import "./loginJugador.css";
-import {useStateValue} from './StateProvider'
+import {useStateValue} from './StateProvider';
+import {db,auth,storage} from './firebase';
 
 function LoginJugador() {
-	const [{user}, dispatch] = useStateValue()
+	const [{user,gameID}, dispatch] = useStateValue()
 	const history = useHistory();
 	const [gameId, setGameId] = useState('');
 	const [playerName, setPlayerName] = useState('');
@@ -14,13 +15,21 @@ function LoginJugador() {
 
 	const submitPlayer = (e) =>{
 		e.preventDefault();
-		console.log(gameId, playerName,playerTeam);
-		dispatch({
-			type : 'SET_USER',
-			user : {id : gameId, player : playerName, team : playerTeam}
+		//CHECK IF THE DOCUMENT INSIDE GAMESID EXISTS
+		db.collection('gamesID').doc(gameId).get().then((doc)=>{
+			//Document exists ? Take the user to the room
+			if(doc.exists){
+				dispatch({
+					type : 'SET_USER',
+					user : {gameID : gameId, player : playerName, team : playerTeam}
+				})
+				history.push(`/game/gameId=${gameId}`)
+			}else{
+				//THE GAME ID DOESN'T EXISTS
+				alert("The Game ID is not in use. TRY AGAIN!")
+			}
 		})
-		console.log(user)
-		history.push(`/game/${gameId}`)
+
 	}
 	return (		
 		<div className="container">

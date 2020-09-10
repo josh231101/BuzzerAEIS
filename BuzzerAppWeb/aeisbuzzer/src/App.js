@@ -25,13 +25,13 @@ function App() {
           <Route path="/loginJugador">
             <LoginJugador/>
           </Route>
-          <Route path="/vistaModerador">
+          <Route path="/vistaModerador/gameId=:id">
             <VistaModerador/>
           </Route>
           <Route path="/vistaJugador">
             <VistaJugador/>
           </Route>
-          <Route path="/game/:id">
+          <Route path="/game/gameId=:id">
             <Game />
           </Route>
         </Switch>

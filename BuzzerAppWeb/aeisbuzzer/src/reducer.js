@@ -1,5 +1,6 @@
 export const initialState = {
     user : null,
+    gameID : null,
 }
 
 const reducer = (state, action) => {
@@ -8,6 +9,11 @@ const reducer = (state, action) => {
             return {
                 ...state,
                 user : action.user,
+            }
+        case 'SET_GAMEID':
+            return {
+                ...state,
+                gameID : action.gameID,
             }
         default : 
             return state;

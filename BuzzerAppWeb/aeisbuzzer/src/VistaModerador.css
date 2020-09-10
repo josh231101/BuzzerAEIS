@@ -1,0 +1,31 @@
+.admin__wrapper{
+    display: flex;
+    margin-bottom: 2rem;
+    justify-content: space-evenly;
+}
+.start{
+    background-color: 	#32CD32;
+}
+.restart{
+    background-color: yellow;
+}
+.admin__buttons{
+    display: flex;
+    justify-content: space-around ;
+}
+.admin__btn{
+    border: none;
+    font-weight: 600;
+    border-radius: 12px;
+    padding : 2% 6%;
+
+}
+.btn__red{
+    background: #e74c3c;
+}
+.btn__blue{
+    background: #3498db;
+}
+.btn__green{
+    background: #2ecc71;
+}

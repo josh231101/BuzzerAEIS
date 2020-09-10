@@ -15,7 +15,10 @@
       background-color: #F27405;
     }
   }
-  
+/*body {
+    animation: 17000ms ease-in-out infinite color-change;
+    font-family: 'Montserrat', sans-serif;
+}*/
   .btn {
     margin-top: 10px;
     margin-bottom: 10px;

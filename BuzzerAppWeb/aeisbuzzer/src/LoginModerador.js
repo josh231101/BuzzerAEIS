@@ -1,20 +1,35 @@
 import React, {useState} from 'react';
 import './loginModerador.css';
 import {db,auth,storage} from './firebase';
-import {useHistory} from 'react-router-dom'
+import {useHistory} from 'react-router-dom';
+import {useStateValue} from './StateProvider';
+
 function LoginModerador() {
+	const [{user, gameID}, dispatch] = useStateValue();
 	const history = useHistory();
 	const [_id,setId] = useState("")
 
 	const createGameById = (e) => {
 		e.preventDefault();
+
+		dispatch({
+			type : 'SET_GAMEID',
+			gameID: _id,
+		})
 		db.collection("gamesID").doc(_id).set({
-			exists : true,
+			canPlay : false,
+			hasPoint : "none",
+			restart : false,
+			pointsBlue : 0,
+			pointsRed : 0,
+			pointsGreen : 0,
+			round : 1,
 		})
 		.then(()=> {
 			console.log("Document successfully written!!");
-			history.push(`/vistaModerador/${_id}`)
+			history.push(`/vistaModerador/gameId=${_id}`)
 		})
+		.catch((error)=>{alert("Error creating document: ",error)})
 	}
 	return (
 		<div className="container">
@@ -24,7 +39,7 @@ function LoginModerador() {
 						<h1>AEIS's Buzzer App</h1>
 						<hr/>
 						<form onSubmit={createGameById}>
-						<label>ID del juego: <input  className="content__id" placeholder="6 digits" value={_id} onChange={(e) => setId(e.target.value)}></input></label>
+						<label>ID del juego: <input required className="content__id" placeholder="6 digits" value={_id} onChange={(e) => setId(e.target.value)}></input></label>
 						<br/>
 						<button class="btn" type="submit" className="btn btn-info">Iniciar Juego</button>
 

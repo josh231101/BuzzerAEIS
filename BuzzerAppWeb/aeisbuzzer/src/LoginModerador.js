@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import './loginModerador.css';
 import {db,auth,storage} from './firebase';
 import {useHistory} from 'react-router-dom';
@@ -7,7 +7,10 @@ import {useStateValue} from './StateProvider';
 function LoginModerador() {
 	const [{user, gameID}, dispatch] = useStateValue();
 	const history = useHistory();
-	const [_id,setId] = useState("")
+	const [_id,setId] = useState("");
+	useEffect(() => {
+        document.body.style.animation = "E4E4E4"
+    }, [])
 
 	const createGameById = (e) => {
 		e.preventDefault();

@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useState, useEffect} from 'react';
 import {useHistory} from 'react-router-dom';
 import "./loginJugador.css";
 import {useStateValue} from './StateProvider';
@@ -10,9 +10,10 @@ function LoginJugador() {
 	const [gameId, setGameId] = useState('');
 	const [playerName, setPlayerName] = useState('');
 	const [playerTeam, setPlayerTeam] = useState('');
-
-
-
+	
+	useEffect(() => {
+        document.body.style.animation = "E4E4E4"
+    }, [])
 	const submitPlayer = (e) =>{
 		e.preventDefault();
 		//CHECK IF THE DOCUMENT INSIDE GAMESID EXISTS

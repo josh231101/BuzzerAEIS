@@ -81,8 +81,9 @@ function VistaModerador() {
 					<label>Ronda:  {gameStatus.round}</label>
 					<br/>
 					
-					<label>Jugador: 
-						<div className="playersbuzzer__wrapper">
+					<label>Jugador:</label>
+					<br/>
+					<div className="playersbuzzer__wrapper">
 							{playersBuzz.map(({id, playerBuzz}) =>
 							<PlayerBuzz 
 								key={id} 
@@ -90,7 +91,6 @@ function VistaModerador() {
 								playerTeam={playerBuzz.userTeam} /> 
 							)} 
 						</div>
-						</label>
 					<br/>
 					<br/>
 					<div className="admin__wrapper">
@@ -99,9 +99,9 @@ function VistaModerador() {
 						
 					</div>
 					<div className="admin__buttons">
-					<button onClick={addPointToTeam} value="Blue" class="admin__btn btn__blue">Punto Azul</button>
-					<button onClick={addPointToTeam} value="Red" class="admin__btn btn__red">Punto Rojo</button>
-					<button onClick={addPointToTeam} value="Green" class="admin__btn btn__green">Punto Verde</button>
+						<button onClick={addPointToTeam} value="Blue" class="admin__btn btn__blue">Punto Azul</button>
+						<button onClick={addPointToTeam} value="Red" class="admin__btn btn__red">Punto Rojo</button>
+						<button onClick={addPointToTeam} value="Green" class="admin__btn btn__green">Punto Verde</button>
 					</div>
 				</div>)
 				 : (

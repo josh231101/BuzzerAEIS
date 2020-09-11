@@ -1,22 +1,27 @@
-import React,{useState, useEffect} from 'react'
-import './Game.css'
+import React,{useState, useEffect} from 'react';
+import './Game.css';
 import {db} from './firebase';
 import {useStateValue} from './StateProvider';
 import { firestore } from 'firebase';
+import useSound from 'use-sound';
+import boopSfx from './sounds/bell_sound.mp3';
+import userIn from './sounds/airhorn.mp3';
+
 function Game() {
     const [ {user,gameID}, dispatch] = useStateValue();
     const [gameStatus, setGameStatus] = useState({});
+    const [tap] = useSound(boopSfx);
+    const [isLoggedin] = useSound(userIn)
     
-    console.log(user);
-    useEffect(() => {
+    useEffect(() => {    
         if(user){
+            isLoggedin()
             db.collection('gamesID').doc(user.gameID).onSnapshot((snapshot)=>{
                 console.log(snapshot.data());
                 setGameStatus(snapshot.data())
             })
-        }else{
-        }
-    }, [])
+        }else{}
+    }, [isLoggedin])
 
 	
     const bgColor = () => {    
@@ -30,6 +35,7 @@ function Game() {
         }
     }
     const sendUserParticipation = () => {
+        tap()
 		db.collection(`gamesID/${user.gameID}/playersBuzz`).add({
             userPlayer : user.player,
             userTeam : user.team,
@@ -40,11 +46,14 @@ function Game() {
 		})
 		.catch((error)=>{alert("Error creating document: ",error)})
     }
+    
     return (
         <div className={"game "  + (gameStatus.canPlay && "start__game")}>
             {user ? (
-                <div className="game__button">
-                <a onClick={gameStatus.canPlay ? sendUserParticipation : ()=>{}} className={"button" + " " + bgColor()}></a>
+                <div>    
+                    <div className="game__button">
+                    <a onClick={gameStatus.canPlay ? sendUserParticipation : ()=>{}} className={"button" + " " + bgColor()}></a>
+                    </div>
                 </div>
             ): (
                 <div>

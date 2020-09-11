@@ -7,7 +7,7 @@ html,body{
     justify-content: center;
   }
   body {
-    animation: 17000ms ease-in-out infinite color-change;
+    /*animation: 17000ms ease-in-out infinite color-change;*/
     font-family: 'Montserrat', sans-serif;
   }
   

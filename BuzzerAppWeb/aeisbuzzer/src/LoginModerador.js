@@ -35,7 +35,7 @@ function LoginModerador() {
 		<div className="container">
 			<div className="row">
 				<div className="col-lg-12">
-					<div className="jumbotron" id="content">
+					<div className="login__moderador" id="login__moderadorWrapper">
 						<h1>AEIS's Buzzer App</h1>
 						<hr/>
 						<form onSubmit={createGameById}>

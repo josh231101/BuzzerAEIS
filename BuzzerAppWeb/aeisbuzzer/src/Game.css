@@ -1,8 +1,8 @@
 .game{
-    height: 100%;
     display: flex;
     justify-items: center;
     justify-content: center;
+    align-items: center;
     font-size: 20px;
 }
 .game__button{
@@ -26,6 +26,7 @@
     font: 14px "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: #ecf0f1;
     box-shadow: 10px 10px 10px 10px rgba(0,0,0,0.88);
+    cursor: pointer;
   }
   .button:active{
     position:relative;
@@ -58,8 +59,20 @@
   }
 
 .start__game{
-  animation-name: example;
+  animation-name: bounce-4, example;
   animation-duration: 4s;
+  transition-timing-function: ease-out;
+}
+.start__game {
+  animation-name: bounce-4;
+  animation-timing-function: ease;
+}
+@keyframes bounce-4 {
+  0%   { transform: scale(1,1)    translateY(0); }
+  10%  { transform: scale(1.1,.9) translateY(0); }
+  30%  { transform: scale(.9,1.1) translateY(-100px); }
+  50%  { transform: scale(1,1)    translateY(0); }
+  100% { transform: scale(1,1)    translateY(0); }
 }
 /* The animation code */
 @keyframes example {

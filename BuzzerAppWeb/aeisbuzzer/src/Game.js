@@ -5,6 +5,7 @@ import {useStateValue} from './StateProvider';
 function Game() {
     const [ {user,gameID}, dispatch] = useStateValue();
     const [gameStatus, setGameStatus] = useState({});
+    
     console.log(user);
     useEffect(() => {
         if(user){
@@ -28,16 +29,27 @@ function Game() {
         }
     }
     const sendUserParticipation = () => {
-        console.log("YOU FUCKING PROGRAMMER CLICKED ME!");
+		db.collection(`gamesID/${user.gameID}/playersBuzz`).add({
+            userPlayer : user.player,
+            userTeam : user.team 
+		})
+		.then(()=> {
+			
+		})
+		.catch((error)=>{alert("Error creating document: ",error)})
     }
     return (
         <div className={"game "  + (gameStatus.canPlay && "start__game")}>
             {user ? (
                 <div className="game__button">
-
                 <a onClick={gameStatus.canPlay ? sendUserParticipation : ()=>{}} className={"button" + " " + bgColor()}></a>
                 </div>
-            ): <h1>YOU ARE NOT LOGGED IN!</h1>}
+            ): (
+                <div>
+						 <h1>You can not access this, please login</h1>
+						 <a className="btn" href="/loginJugador">Log-In</a>
+					 </div>
+            )}
         </div>
     )
 }

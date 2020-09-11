@@ -17,7 +17,7 @@
     border: none;
     font-weight: 600;
     border-radius: 12px;
-    padding : 2% 6%;
+    padding : 2vh 3vh;
 
 }
 .btn__red{
@@ -28,4 +28,11 @@
 }
 .btn__green{
     background: #2ecc71;
+}
+#vista__moderadorWrapper{
+    padding: 4%;
+	text-align: center;
+	width: 700px;
+	background-color:rgba(255,255,255,0.5);
+	box-shadow: 0 0 3px rgb(0, 0, 0, 0.1);
 }

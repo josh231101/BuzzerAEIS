@@ -4,7 +4,7 @@ import {Link} from "react-router-dom";
 
 function Home() {
     return (
-        <div className="jumbotron" id="content">
+        <div className="home" id="home__wrapper">
             <h1 id="title">AEIS's Buzzer App</h1>
             <hr/>
             <Link to="/loginModerador" className="btn btn-info">

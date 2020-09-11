@@ -64,9 +64,13 @@ function VistaModerador() {
 		/*db.collection('gamesID').doc(gameID).update({
 			round : firebase.firestore.FieldValue.increment(1)
 		})*/
-		db.collection(`gamesID/${gameID}/playersBuzz`).delete().then(()=>{
-			alert("PLAYERS CLICKS HAVE BEEN DELETED NOW YOU CAN PLAY AGAIN")
-		}).catch((e)=>{alert(e)})
+		db.collection(`gamesID/${gameID}/playersBuzz`)
+  		.get()
+  		.then(res => {
+    		res.forEach(element => {
+      			element.ref.delete();
+    	});
+  });
 	}
 
 	return (

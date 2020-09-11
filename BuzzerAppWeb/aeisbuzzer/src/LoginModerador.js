@@ -41,7 +41,7 @@ function LoginModerador() {
 						<form onSubmit={createGameById}>
 						<label>ID del juego: <input required className="content__id" placeholder="6 digits" value={_id} onChange={(e) => setId(e.target.value)}></input></label>
 						<br/>
-						<button class="btn" type="submit" className="btn btn-info">Iniciar Juego</button>
+						<button className="btn" type="submit" className="btn btn-info">Iniciar Juego</button>
 
 						</form>
 					</div>

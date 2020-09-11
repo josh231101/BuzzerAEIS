@@ -4,6 +4,7 @@ import {db} from './firebase';
 import firebase from 'firebase'
 import "./VistaModerador.css";
 import {useStateValue} from './StateProvider';
+import PlayerBuzz from './PlayerBuzz'
 
 function VistaModerador() { 
 	const [{user,gameID}, dispatch] = useStateValue();
@@ -18,12 +19,11 @@ function VistaModerador() {
 	}, [])
 	
 	useEffect(() => {
-		gameID && db.collection(`gamesID/${gameID}/playersBuzz`).onSnapshot((snapshot) =>{
-			snapshot.docs.map((doc)=>{
-				console.log(doc.data());
-				/*MISSING FANCY STUFF */
-			});
+		gameID && db.collection(`gamesID/${gameID}/playersBuzz`).orderBy("timestamp","asc").onSnapshot((snapshot) =>{
+			setPlayersBuzz(snapshot.docs.map(doc => ({id : doc.id,playerBuzz : doc.data() })))
+			
 		})
+		console.log(playersBuzz);
 
 	}, [])
 
@@ -60,36 +60,48 @@ function VistaModerador() {
 		
 	}
 
-	const nextRound = () =>{
-		db.collection('gamesID').doc(gameID).update({
+	const restart = () =>{
+		/*db.collection('gamesID').doc(gameID).update({
 			round : firebase.firestore.FieldValue.increment(1)
-		})
+		})*/
+		db.collection(`gamesID/${gameID}/playersBuzz`).delete().then(()=>{
+			alert("PLAYERS CLICKS HAVE BEEN DELETED NOW YOU CAN PLAY AGAIN")
+		}).catch((e)=>{alert(e)})
 	}
 
 	return (
-		<div class="vista__moderador" id="vista__moderadorWrapper">
+		<div className="vista__moderador" id="vista__moderadorWrapper">
 			{gameID ? 
 				(<div>
-				<h1>Id de la reunión: {gameID}</h1>
-				<hr/>
-				<div className="usersAnswer">
-				</div>
-				<label>Ronda:  {gameStatus.round}</label>
-				<br/>
-				<label>Equipo:  {playersBuzz}</label>
-				<br/>
-				<label>Jugador:  .jugador</label>
-				<br/>
-				<div className="admin__wrapper">
-					<button onClick={startGame} className="admin__btn start">Empezar</button>
-					<button onClick={nextRound} className="admin__btn restart">Reiniciar</button>
+					<h1>Id de la reunión: {gameID}</h1>
+					<hr/>
+					<div className="usersAnswer">
+					</div>
+					<label>Ronda:  {gameStatus.round}</label>
+					<br/>
 					
-				</div>
-				<div className="admin__buttons">
-				<button onClick={addPointToTeam} value="Blue" class="admin__btn btn__blue">Punto Azul</button>
-				<button onClick={addPointToTeam} value="Red" class="admin__btn btn__red">Punto Rojo</button>
-				<button onClick={addPointToTeam} value="Green" class="admin__btn btn__green">Punto Verde</button>
-				</div>
+					<label>Jugador: 
+						<div className="playersbuzzer__wrapper">
+							{playersBuzz.map(({id, playerBuzz}) =>
+							<PlayerBuzz 
+								key={id} 
+								playerName={playerBuzz.userPlayer} 
+								playerTeam={playerBuzz.userTeam} /> 
+							)} 
+						</div>
+						</label>
+					<br/>
+					<br/>
+					<div className="admin__wrapper">
+						<button onClick={startGame} className="admin__btn start">Empezar</button>
+						<button onClick={restart} className="admin__btn restart">Reiniciar</button>
+						
+					</div>
+					<div className="admin__buttons">
+					<button onClick={addPointToTeam} value="Blue" class="admin__btn btn__blue">Punto Azul</button>
+					<button onClick={addPointToTeam} value="Red" class="admin__btn btn__red">Punto Rojo</button>
+					<button onClick={addPointToTeam} value="Green" class="admin__btn btn__green">Punto Verde</button>
+					</div>
 				</div>)
 				 : (
 					 <div>

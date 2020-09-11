@@ -32,7 +32,7 @@ function LoginJugador() {
 
 	}
 	return (
-		<div class="login__jugador" id="login__jugadorWrapper">
+		<div className="login__jugador" id="login__jugadorWrapper">
 			<h1 id="title">AEIS's Buzzer App</h1>
 			<hr/>
 			<form onSubmit={submitPlayer}>

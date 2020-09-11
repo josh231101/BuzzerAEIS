@@ -2,6 +2,7 @@ import React,{useState, useEffect} from 'react'
 import './Game.css'
 import {db} from './firebase';
 import {useStateValue} from './StateProvider';
+import { firestore } from 'firebase';
 function Game() {
     const [ {user,gameID}, dispatch] = useStateValue();
     const [gameStatus, setGameStatus] = useState({});
@@ -31,7 +32,8 @@ function Game() {
     const sendUserParticipation = () => {
 		db.collection(`gamesID/${user.gameID}/playersBuzz`).add({
             userPlayer : user.player,
-            userTeam : user.team 
+            userTeam : user.team,
+            timestamp : firestore.FieldValue.serverTimestamp()
 		})
 		.then(()=> {
 			

@@ -27,7 +27,9 @@ h1{
 
 #login__jugadorWrapper {
 	width: 700px;
+	padding: 4%;
 	background-color:rgba(255,255,255,0.5);
 	box-shadow: 0 0 3px rgb(0, 0, 0, 0.1);
+	animation: splashscreen 1000ms;
 }
 

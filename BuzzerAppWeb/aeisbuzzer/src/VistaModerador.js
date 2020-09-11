@@ -61,9 +61,6 @@ function VistaModerador() {
 	}
 
 	const restart = () =>{
-		/*db.collection('gamesID').doc(gameID).update({
-			round : firebase.firestore.FieldValue.increment(1)
-		})*/
 		db.collection(`gamesID/${gameID}/playersBuzz`)
   		.get()
   		.then(res => {

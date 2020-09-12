@@ -37,6 +37,7 @@ function VistaModerador() {
 		switch(e.target.value){
 			case 'Blue':
 				db.collection('gamesID').doc(gameID).update({
+					hasPoint : "blue__point",
 					pointsBlue :  firebase.firestore.FieldValue.increment(1),
 					round : firebase.firestore.FieldValue.increment(1)
 
@@ -44,12 +45,14 @@ function VistaModerador() {
 				break;
 			case 'Red':
 				db.collection('gamesID').doc(gameID).update({
+					hasPoint : "red__point",
 					pointsRed :  firebase.firestore.FieldValue.increment(1),
 					round : firebase.firestore.FieldValue.increment(1)
 				})
 				break;
 			case 'Green':
 				db.collection('gamesID').doc(gameID).update({
+					hasPoint : "green__point",
 					pointsGreen :  firebase.firestore.FieldValue.increment(1),
 					round : firebase.firestore.FieldValue.increment(1)
 				})
@@ -95,7 +98,7 @@ function VistaModerador() {
 					<br/>
 					<div className="admin__wrapper">
 						<button onClick={startGame} className="admin__btn start">Empezar</button>
-						<button onClick={restart} className="admin__btn restart">Reiniciar</button>
+						<button onClick={restart} className="admin__btn restart">Borrar Respuestas</button>
 						
 					</div>
 					<div className="admin__buttons">

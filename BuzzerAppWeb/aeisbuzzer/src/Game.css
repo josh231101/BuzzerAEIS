@@ -5,6 +5,11 @@
     align-items: center;
     font-size: 20px;
 }
+.game__wrapper{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .game__button{
     display: flex;
     align-content: center;
@@ -81,4 +86,23 @@
   50%  {background-color:blue; left:200px; top:200px;}
   75%  {background-color:green; left:0px; top:200px;}
   100% {background-color:red; left:0px; top:0px;}
+}
+
+.game__wrapperPoints{
+  margin-top: 30px;
+}
+
+@keyframes red__point{  
+  from{
+    background-color: red;
+  }
+  to{
+    background-color: yellow;
+  }
+}
+@keyframes green__point{
+  
+}
+@keyframes blue__point{
+  
 }

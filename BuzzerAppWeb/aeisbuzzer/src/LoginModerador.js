@@ -35,22 +35,18 @@ function LoginModerador() {
 		.catch((error)=>{alert("Error creating document: ",error)})
 	}
 	return (
-		<div className="container">
-			<div className="row">
-				<div className="col-lg-12">
-					<div className="login__moderador" id="login__moderadorWrapper">
-						<h1>AEIS's Buzzer App</h1>
-						<hr/>
-						<form onSubmit={createGameById}>
-						<label>ID del juego: <input required className="content__id" placeholder="6 digits" value={_id} onChange={(e) => setId(e.target.value)}></input></label>
-						<br/>
-						<button className="btn" type="submit" className="btn btn-info">Iniciar Juego</button>
 
-						</form>
-					</div>
-				</div>
-			</div>
+		<div className="login__moderador" id="login__moderadorWrapper">
+			<h1>AEIS's Buzzer App</h1>
+			<hr/>
+			<form onSubmit={createGameById}>
+			<label>ID del juego: <input required className="content__id" placeholder="6 digits" value={_id} onChange={(e) => setId(e.target.value)}></input></label>
+			<br/>
+			<button className="btn" type="submit" className="btn btn-info">Iniciar Juego</button>
+
+			</form>
 		</div>
+
 	)
 }
 

@@ -11,3 +11,11 @@ html,body{
     font-family: 'Montserrat', sans-serif;
   }
   
+/*ADD RESPONSIVENESS TO THE LOGINS*/
+@media (max-width : 1200px){
+  #home__wrapper, #login__moderadorWrapper, #login__jugadorWrapper{
+    width: auto !important;
+    margin : 4%;
+  }
+
+}

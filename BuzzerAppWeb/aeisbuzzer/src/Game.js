@@ -12,6 +12,7 @@ import ding from './sounds/ding.mp3'
 function Game() {
     const [ {user,gameID}, dispatch] = useStateValue();
     const [gameStatus, setGameStatus] = useState({});
+    const [round, setRound] = useState();
     const [tap] = useSound(boopSfx);
     const [isLoggedin] = useSound(userIn)
     const [beginPlay] = useSound(beginSound)
@@ -36,6 +37,7 @@ function Game() {
             isLoggedin()
             db.collection('gamesID').doc(user.gameID).onSnapshot((snapshot)=>{
                 setStarted(snapshot.data().canPlay);
+                setRound(snapshot.data().round);
                 setGameStatus(snapshot.data());
                 
             })
@@ -51,7 +53,11 @@ function Game() {
     useEffect(() => {
         user && userPoint()
     }, [teamPoints()])
-	
+    useEffect(() => {
+        if(user){document.getElementById("round").style.animation = "update-round 4s";}
+
+    }, [round])
+
     const bgColor = () => {    
         switch(user.team){
             case 'Equipo Rojo':
@@ -77,14 +83,16 @@ function Game() {
     }
 
     return (
-        <div className={"game "  + (gameStatus.canPlay && "start__game")}>
+        <div className="game ">
             
             {user ? (
-                <div className="game__wrapper">    
-                    <div className="game__button">
+                <div className="game__wrapper"> 
+                    
+                    <div className={"game__button " + (gameStatus.canPlay && "start__game") }>
                     <a onClick={gameStatus.canPlay ? sendUserParticipation : ()=>{}} className={"button" + " " + bgColor()}></a>
                     </div>
                     <h2 className="game__wrapperPoints">{user.team} Puntos: {teamPoints()}</h2>
+                    <h2 id="round" className="game__wrapperRound">Ronda: {round}</h2>
                 </div>
             ): (
                 <div>

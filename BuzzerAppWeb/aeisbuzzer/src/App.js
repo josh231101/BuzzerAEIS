@@ -9,7 +9,6 @@ import Home from './Home';
 import LoginModerador from './LoginModerador';
 import LoginJugador from './LoginJugador';
 import VistaModerador from './VistaModerador';
-import VistaJugador from './VistaJugador';
 import Game from './Game';
 
 function App() {
@@ -26,9 +25,6 @@ function App() {
           </Route>
           <Route path="/vistaModerador/gameId=:id">
             <VistaModerador/>
-          </Route>
-          <Route path="/vistaJugador">
-            <VistaJugador/>
           </Route>
           <Route path="/game/gameId=:id">
             <Game />

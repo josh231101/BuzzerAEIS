@@ -13,7 +13,6 @@ function VistaModerador() {
 
 	useEffect(() => {
 		gameID && db.collection('gamesID').doc(gameID).onSnapshot((snapshot)=>{
-			console.log(snapshot.data());
 			setGameStatus(snapshot.data())
 		})
 	}, [])
@@ -23,8 +22,6 @@ function VistaModerador() {
 			setPlayersBuzz(snapshot.docs.map(doc => ({id : doc.id,playerBuzz : doc.data() })))
 			
 		})
-		console.log(playersBuzz);
-
 	}, [])
 
 	const startGame = ()=>{
@@ -36,11 +33,11 @@ function VistaModerador() {
 	const addPointToTeam = (e) => {
 		switch(e.target.value){
 			case 'Blue':
+				restart()
 				db.collection('gamesID').doc(gameID).update({
 					hasPoint : "blue__point",
 					pointsBlue :  firebase.firestore.FieldValue.increment(1),
 					round : firebase.firestore.FieldValue.increment(1)
-
 				})
 				break;
 			case 'Red':
@@ -69,8 +66,8 @@ function VistaModerador() {
   		.then(res => {
     		res.forEach(element => {
       			element.ref.delete();
-    	});
-  });
+    		});
+  		});
 	}
 
 	return (
@@ -98,13 +95,16 @@ function VistaModerador() {
 					<br/>
 					<div className="admin__wrapper">
 						<button onClick={startGame} className="admin__btn start">Empezar</button>
-						<button onClick={restart} className="admin__btn restart">Borrar Respuestas</button>
+						<button  className="admin__btn restart">Finalizar juego</button>
 						
 					</div>
 					<div className="admin__buttons">
-						<button onClick={addPointToTeam} value="Blue" class="admin__btn btn__blue">Punto Azul</button>
-						<button onClick={addPointToTeam} value="Red" class="admin__btn btn__red">Punto Rojo</button>
-						<button onClick={addPointToTeam} value="Green" class="admin__btn btn__green">Punto Verde</button>
+						<button onClick={addPointToTeam} value="Blue" class="admin__btn btn__blue">Punto Azul {gameStatus.pointsBlue}</button>
+						
+						<button onClick={addPointToTeam} value="Red" class="admin__btn btn__red">Punto Rojo {gameStatus.pointsRed}</button>
+						
+						<button onClick={addPointToTeam} value="Green" class="admin__btn btn__green">Punto Verde {gameStatus.pointsGreen}</button>
+						
 					</div>
 				</div>)
 				 : (

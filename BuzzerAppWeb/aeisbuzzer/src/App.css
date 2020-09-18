@@ -12,7 +12,7 @@ html,body{
   }
   
 /*ADD RESPONSIVENESS TO THE LOGINS*/
-@media (max-width : 1200px){
+@media (max-width : 800px){
   #home__wrapper, #login__moderadorWrapper, #login__jugadorWrapper{
     width: auto !important;
     margin : 4%;

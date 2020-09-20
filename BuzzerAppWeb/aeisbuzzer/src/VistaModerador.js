@@ -26,14 +26,19 @@ function VistaModerador() {
 
 	const startGame = ()=>{
 		db.collection('gamesID').doc(gameID).update({
-			canPlay : true
+			canPlay : true,
+			hasPoint : "none",
+			pointsBlue : 0,
+			pointsRed : 0,
+			pointsGreen : 0,
+			round : 1,
 		})
 	}
 	const setPointToNone = () => {
 		db.collection('gamesID').doc(gameID).update({
 			hasPoint : "none"
 		})
-}
+	}
 
 	const addPointToTeam = (e) => {
 		switch(e.target.value){
@@ -112,11 +117,11 @@ function VistaModerador() {
 						
 					</div>
 					<div className="admin__buttons">
-						<button onClick={addPointToTeam} value="Blue" class="admin__btn btn__blue">Punto Azul {gameStatus.pointsBlue}</button>
+						<button onClick={addPointToTeam} value="Blue" class="admin__btn btn__blue">Punto Azul <br/>Puntos actuales: {gameStatus.pointsBlue}</button>
 						
-						<button onClick={addPointToTeam} value="Red" class="admin__btn btn__red">Punto Rojo {gameStatus.pointsRed}</button>
+						<button onClick={addPointToTeam} value="Red" class="admin__btn btn__red">Punto Rojo <br/>Puntos actuales:{gameStatus.pointsRed}</button>
 						
-						<button onClick={addPointToTeam} value="Green" class="admin__btn btn__green">Punto Verde {gameStatus.pointsGreen}</button>
+						<button onClick={addPointToTeam} value="Green" class="admin__btn btn__green">Punto Verde <br/>Puntos actuales:{gameStatus.pointsGreen}</button>
 						
 					</div>
 				</div>)

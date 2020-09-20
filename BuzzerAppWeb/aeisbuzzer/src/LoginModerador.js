@@ -26,10 +26,8 @@ function LoginModerador() {
 			pointsBlue : 0,
 			pointsRed : 0,
 			pointsGreen : 0,
-			round : 1,
 		})
 		.then(()=> {
-			console.log("Document successfully written!!");
 			history.push(`/vistaModerador/gameId=${_id}`)
 		})
 		.catch((error)=>{alert("Error creating document: ",error)})

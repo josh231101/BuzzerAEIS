@@ -13,7 +13,7 @@ function Game() {
     const [ {user,gameID}, dispatch] = useStateValue();
     const [gameStatus, setGameStatus] = useState({});
     const [round, setRound] = useState();
-    const [gotPoint, hasGottenPoint] = useState();
+    const [gotPoint, hasGottenPoint] = useState("none");
     const [tap] = useSound(boopSfx);
     const [isLoggedin] = useSound(userIn)
     const [beginPlay] = useSound(beginSound)
@@ -44,18 +44,30 @@ function Game() {
             })
         }else{}
     }, [isLoggedin])
+
     useEffect(() => {
         if(user){
-            if(gotPoint != "none"){
-                console.log(gotPoint);
+            if(gotPoint != "none" || gotPoint != "undefined" || gotPoint != null){
+                updateTeamPoint(gotPoint)
                 document.body.style.animation =  `${gotPoint} 2000ms ease-in-out`;
+
                 setTimeout(() => {
                     document.body.style.animation = "E4E4E4"
+                    document.getElementById('teamPoint').innerHTML = ""
                   }, 2500);
             }
         }
-    }, [round])
-
+    }, [gotPoint])
+    const updateTeamPoint = (team) => {
+        switch(team){
+            case 'Equipo_Rojo':
+            case 'Equipo_Azul':
+            case 'Equipo_Verde':
+                return document.getElementById('teamPoint').innerHTML = `${bgColor(team).toUpperCase()} POINT!!`;
+            default:
+                return true;
+        }
+    }
 
     useEffect(() => {
         /*IF HASSTARTED CHANGES ITS VALUE MAKE THIS EFFECT */
@@ -65,19 +77,25 @@ function Game() {
     useEffect(() => {
         user && userPoint()
     }, [teamPoints()])
+
     useEffect(() => {
         if(user){document.getElementById("round").style.animation = "update-round 4s";}
 
     }, [round])
 
-    const bgColor = () => {    
-        switch(user.team){
+    const bgColor = (team) => {    
+        switch(team){
             case 'Equipo Rojo':
+            case 'Equipo_Rojo':
                 return 'red'
             case 'Equipo Verde' :
+            case 'Equipo_Verde' :
                 return 'green'
             case 'Equipo Azul' : 
+            case 'Equipo_Azul' :
                 return 'blue'
+            case 'none':
+                return ""
         }
     }
 
@@ -101,10 +119,11 @@ function Game() {
                 <div className="game__wrapper"> 
                     
                     <div className={"game__button " + (gameStatus.canPlay && "start__game") }>
-                    <a onClick={gameStatus.canPlay ? sendUserParticipation : ()=>{}} className={"button" + " " + bgColor()}></a>
+                    <a onClick={gameStatus.canPlay ? sendUserParticipation : ()=>{}} className={"button" + " " + bgColor(user.team)}></a>
                     </div>
                     <h2 className="game__wrapperPoints">{user.team} Puntos: {teamPoints()}</h2>
                     <h2 id="round" className="game__wrapperRound">Ronda: {round}</h2>
+                    <h1 id="teamPoint"></h1>
                 </div>
             ): (
                 <div>

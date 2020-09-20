@@ -108,17 +108,29 @@
   margin-top: 30px;
 }
 
-@keyframes red__point{  
+@keyframes Equipo_Rojo{  
   from{
-    background-color: red;
+    background-color: #e74c3c;
   }
   to{
-    background-color: yellow;
+    background-color:#E4E4E4;
   }
 }
-@keyframes green__point{
+@keyframes Equipo_Verde{
+  from{
+    background-color: #2ecc71;
+  }
+  to{
+    background-color:#E4E4E4;
+  }
   
 }
-@keyframes blue__point{
+@keyframes Equipo_Azul{
+  from{
+    background-color: #3498db;
+  }
+  to{
+    background-color:#E4E4E4;
+  }
   
 }

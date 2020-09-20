@@ -29,31 +29,44 @@ function VistaModerador() {
 			canPlay : true
 		})
 	}
+	const setPointToNone = () => {
+		db.collection('gamesID').doc(gameID).update({
+			hasPoint : "none"
+		})
+}
 
 	const addPointToTeam = (e) => {
 		switch(e.target.value){
 			case 'Blue':
+				//DELETE ALL THE CLICKS LIST
 				restart()
 				db.collection('gamesID').doc(gameID).update({
-					hasPoint : "blue__point",
+					hasPoint : "Equipo_Azul",
 					pointsBlue :  firebase.firestore.FieldValue.increment(1),
 					round : firebase.firestore.FieldValue.increment(1)
 				})
+				//Set hasPoint AGAIN to none
+				///setPointToNone();
 				break;
 			case 'Red':
+				restart()
 				db.collection('gamesID').doc(gameID).update({
-					hasPoint : "red__point",
+					hasPoint : "Equipo_Rojo",
 					pointsRed :  firebase.firestore.FieldValue.increment(1),
 					round : firebase.firestore.FieldValue.increment(1)
 				})
+				///setPointToNone();
 				break;
 			case 'Green':
+				restart()
 				db.collection('gamesID').doc(gameID).update({
-					hasPoint : "green__point",
+					hasPoint : "Equipo_Verde",
 					pointsGreen :  firebase.firestore.FieldValue.increment(1),
 					round : firebase.firestore.FieldValue.increment(1)
 				})
+				//setPointToNone();
 				break;
+			/*TODO : ADD NEW COLOR TEAM*/
 			default:
 				break;
 		}

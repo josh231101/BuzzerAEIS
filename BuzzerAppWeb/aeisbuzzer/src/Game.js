@@ -13,12 +13,12 @@ function Game() {
     const [ {user,gameID}, dispatch] = useStateValue();
     const [gameStatus, setGameStatus] = useState({});
     const [round, setRound] = useState();
+    const [gotPoint, hasGottenPoint] = useState();
     const [tap] = useSound(boopSfx);
     const [isLoggedin] = useSound(userIn)
     const [beginPlay] = useSound(beginSound)
     const [userPoint] = useSound(ding)    
     const [hasStarted, setStarted] = useState(false)
-    const [hasPoint, setPoint] = useState();
 
     const teamPoints = () =>{
         if(user){
@@ -36,6 +36,7 @@ function Game() {
         if(user){
             isLoggedin()
             db.collection('gamesID').doc(user.gameID).onSnapshot((snapshot)=>{
+                hasGottenPoint(snapshot.data().hasPoint)
                 setStarted(snapshot.data().canPlay);
                 setRound(snapshot.data().round);
                 setGameStatus(snapshot.data());
@@ -43,6 +44,17 @@ function Game() {
             })
         }else{}
     }, [isLoggedin])
+    useEffect(() => {
+        if(user){
+            if(gotPoint != "none"){
+                console.log(gotPoint);
+                document.body.style.animation =  `${gotPoint} 2000ms ease-in-out`;
+                setTimeout(() => {
+                    document.body.style.animation = "E4E4E4"
+                  }, 2500);
+            }
+        }
+    }, [round])
 
 
     useEffect(() => {

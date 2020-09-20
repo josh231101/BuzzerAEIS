@@ -42,7 +42,7 @@ function Game() {
                 setGameStatus(snapshot.data());
                 
             })
-        }else{}
+        }
     }, [isLoggedin])
 
     useEffect(() => {
@@ -78,10 +78,7 @@ function Game() {
         user && userPoint()
     }, [teamPoints()])
 
-    useEffect(() => {
-        if(user){document.getElementById("round").style.animation = "update-round 4s";}
 
-    }, [round])
 
     const bgColor = (team) => {    
         switch(team){

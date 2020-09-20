@@ -72,20 +72,7 @@
   animation-name: bounce-4;
   animation-timing-function: ease;
 }
-.game__wrapperRound{
-  visibility: visible;
-  animation-name: update-round;
-  animation-duration: 3s;
-}
-@keyframes update-round {
-  from{
-      transition: scale(1.3);
-      color: red;
-  }to{
-      visibility: hidden;
-      color: black;
-  }
-}
+
 
 
 @keyframes bounce-4 {

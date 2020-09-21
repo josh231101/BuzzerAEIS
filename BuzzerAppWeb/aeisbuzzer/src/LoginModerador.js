@@ -23,6 +23,7 @@ function LoginModerador() {
 			canPlay : false,
 			hasPoint : "none",
 			isFinished : false,
+			winner : "none",
 			hasWrongAnswer : "none",
 			restart : false,
 			pointsBlue : 0,

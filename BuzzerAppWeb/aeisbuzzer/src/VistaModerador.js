@@ -32,6 +32,7 @@ function VistaModerador() {
 			pointsRed : 0,
 			pointsGreen : 0,
 			round : 1,
+			isFinished : false,
 		})
 		restart()
 	}
@@ -95,8 +96,26 @@ function VistaModerador() {
 		})
 	}
 	const finishGame = () =>{
+		const teamsPoints = [
+			{teamPoints : gameStatus.pointsBlue, teamColor : "Equipo Azul" }, 
+			{teamPoints : gameStatus.pointsGreen, teamColor : "Equipo Verde"}, 
+			{teamPoints : gameStatus.pointsRed , teamColor : "Equipo Rojo"}
+		]
+		let winnerTeam = teamsPoints[0]
+		teamsPoints.map((team, iterator)=>{
+			if(team.teamPoints >= winnerTeam.teamPoints ){
+				if(team.teamPoints === winnerTeam.teamsPoints){
+
+						winnerTeam = {teamPoints : winnerTeam.teamPoints , teamColor : "Empate"}
+				}else{
+					winnerTeam = team
+				}
+			}
+		})
+		console.log(winnerTeam);
 		db.collection('gamesID').doc(gameID).update({
 			isFinished : true,
+			winner : winnerTeam.teamColor
 		})
 	}
 	return (

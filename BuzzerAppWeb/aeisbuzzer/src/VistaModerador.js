@@ -33,6 +33,7 @@ function VistaModerador() {
 			pointsGreen : 0,
 			round : 1,
 		})
+		restart()
 	}
 	const setPointToNone = () => {
 		db.collection('gamesID').doc(gameID).update({
@@ -48,7 +49,8 @@ function VistaModerador() {
 				db.collection('gamesID').doc(gameID).update({
 					hasPoint : "Equipo_Azul",
 					pointsBlue :  firebase.firestore.FieldValue.increment(1),
-					round : firebase.firestore.FieldValue.increment(1)
+					round : firebase.firestore.FieldValue.increment(1),
+					hasWrongAnswer : "none"
 				})
 				//Set hasPoint AGAIN to none
 				///setPointToNone();
@@ -58,7 +60,8 @@ function VistaModerador() {
 				db.collection('gamesID').doc(gameID).update({
 					hasPoint : "Equipo_Rojo",
 					pointsRed :  firebase.firestore.FieldValue.increment(1),
-					round : firebase.firestore.FieldValue.increment(1)
+					round : firebase.firestore.FieldValue.increment(1),
+					hasWrongAnswer : "none"
 				})
 				///setPointToNone();
 				break;
@@ -67,7 +70,8 @@ function VistaModerador() {
 				db.collection('gamesID').doc(gameID).update({
 					hasPoint : "Equipo_Verde",
 					pointsGreen :  firebase.firestore.FieldValue.increment(1),
-					round : firebase.firestore.FieldValue.increment(1)
+					round : firebase.firestore.FieldValue.increment(1),
+					hasWrongAnswer : "none"
 				})
 				//setPointToNone();
 				break;
@@ -88,6 +92,12 @@ function VistaModerador() {
   		});
 	}
 
+	const handleWrongAnswer = (e) =>{
+		const wrongTeam = e.target.value;
+		db.collection('gamesID').doc(gameID).update({
+			hasWrongAnswer : wrongTeam,
+		})
+	}
 	return (
 		<div className="vista__moderador" id="vista__moderadorWrapper">
 			{gameID ? 
@@ -113,6 +123,7 @@ function VistaModerador() {
 					<br/>
 					<div className="admin__wrapper">
 						<button onClick={startGame} className="admin__btn start">Empezar</button>
+						
 						<button  className="admin__btn restart">Finalizar juego</button>
 						
 					</div>
@@ -123,6 +134,11 @@ function VistaModerador() {
 						
 						<button onClick={addPointToTeam} value="Green" class="admin__btn btn__green">Punto Verde <br/>Puntos actuales:{gameStatus.pointsGreen}</button>
 						
+					</div>
+					<div className="admin__buttons">
+						<button onClick={handleWrongAnswer} value="Equipo Azul" className="admin__btn wrong__blue">Azul Incorrecto</button>
+						<button onClick={handleWrongAnswer} value="Equipo Rojo" className="admin__btn wrong__red">Rojo Incorrecto</button>
+						<button onClick={handleWrongAnswer} value="Equipo Verde" className="admin__btn wrong__green">Verde Incorrecto</button>
 					</div>
 				</div>)
 				 : (

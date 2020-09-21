@@ -8,17 +8,24 @@ import boopSfx from './sounds/bell_sound.mp3';
 import userIn from './sounds/airhorn.mp3';
 import beginSound from './sounds/start.mp3';
 import ding from './sounds/ding.mp3'
+import wrong from './sounds/wrong_answer.mp3';
+import trumpetSad from './sounds/sad_trompet.mp3';
 
 function Game() {
+    /*HOOKS*/
     const [ {user,gameID}, dispatch] = useStateValue();
     const [gameStatus, setGameStatus] = useState({});
     const [round, setRound] = useState();
     const [gotPoint, hasGottenPoint] = useState("none");
+    const [hasStarted, setStarted] = useState(false);
+    const [hasWrongAnswer, setWrongAnswerTeam] = useState("none");
+    /*SOUNDS*/
     const [tap] = useSound(boopSfx);
-    const [isLoggedin] = useSound(userIn)
-    const [beginPlay] = useSound(beginSound)
-    const [userPoint] = useSound(ding)    
-    const [hasStarted, setStarted] = useState(false)
+    const [isLoggedin] = useSound(userIn);
+    const [beginPlay] = useSound(beginSound);
+    const [userPoint] = useSound(ding);
+    const [wrongAnswer] = useSound(wrong);
+    const [sadTrumpet] = useSound(trumpetSad);
 
     const teamPoints = () =>{
         if(user){
@@ -40,7 +47,7 @@ function Game() {
                 setStarted(snapshot.data().canPlay);
                 setRound(snapshot.data().round);
                 setGameStatus(snapshot.data());
-                
+                setWrongAnswerTeam(snapshot.data().hasWrongAnswer)  
             })
         }
     }, [isLoggedin])
@@ -48,16 +55,34 @@ function Game() {
     useEffect(() => {
         if(user){
             if(gotPoint != "none" || gotPoint != "undefined" || gotPoint != null){
+                //SHOW THE WINNER OF THE POINT
                 updateTeamPoint(gotPoint)
                 document.body.style.animation =  `${gotPoint} 2000ms ease-in-out`;
 
                 setTimeout(() => {
                     document.body.style.animation = "E4E4E4"
                     document.getElementById('teamPoint').innerHTML = ""
-                  }, 2500);
+                }, 2500);
             }
         }
     }, [gotPoint])
+
+    useEffect(() => {
+        if(hasWrongAnswer != null && hasWrongAnswer != "none"){
+            if(user.team == hasWrongAnswer){
+                wrongAnswer();
+                document.body.style.backgroundColor = "#F30000";
+            }else{
+                sadTrumpet();
+            }
+            document.getElementById('teamPoint').innerHTML = `¡${hasWrongAnswer} Incorrecto!`
+            setTimeout(() => {
+                document.body.style.backgroundColor = "#E4E4E4";
+                document.getElementById('teamPoint').innerHTML = ""
+            }, 2500);
+        }
+    }, [hasWrongAnswer])
+
     const updateTeamPoint = (team) => {
         switch(team){
             case 'Equipo_Rojo':

@@ -22,6 +22,7 @@ function LoginModerador() {
 		db.collection("gamesID").doc(_id).set({
 			canPlay : false,
 			hasPoint : "none",
+			hasWrongAnswer : "none",
 			restart : false,
 			pointsBlue : 0,
 			pointsRed : 0,

@@ -1,7 +1,7 @@
 import React,{useState, useEffect} from 'react';
 import './vistaJugador.css';
 import {db} from './firebase';
-import firebase from 'firebase'
+import firebase, { firestore } from 'firebase'
 import "./VistaModerador.css";
 import {useStateValue} from './StateProvider';
 import PlayerBuzz from './PlayerBuzz'
@@ -35,11 +35,6 @@ function VistaModerador() {
 		})
 		restart()
 	}
-	const setPointToNone = () => {
-		db.collection('gamesID').doc(gameID).update({
-			hasPoint : "none"
-		})
-	}
 
 	const addPointToTeam = (e) => {
 		switch(e.target.value){
@@ -52,8 +47,6 @@ function VistaModerador() {
 					round : firebase.firestore.FieldValue.increment(1),
 					hasWrongAnswer : "none"
 				})
-				//Set hasPoint AGAIN to none
-				///setPointToNone();
 				break;
 			case 'Red':
 				restart()
@@ -63,7 +56,6 @@ function VistaModerador() {
 					round : firebase.firestore.FieldValue.increment(1),
 					hasWrongAnswer : "none"
 				})
-				///setPointToNone();
 				break;
 			case 'Green':
 				restart()
@@ -73,7 +65,6 @@ function VistaModerador() {
 					round : firebase.firestore.FieldValue.increment(1),
 					hasWrongAnswer : "none"
 				})
-				//setPointToNone();
 				break;
 			/*TODO : ADD NEW COLOR TEAM*/
 			default:
@@ -96,6 +87,16 @@ function VistaModerador() {
 		const wrongTeam = e.target.value;
 		db.collection('gamesID').doc(gameID).update({
 			hasWrongAnswer : wrongTeam,
+		})
+	}
+	const newRound = () => {
+		db.collection('gamesID').doc(gameID).update({
+			round : firebase.firestore.FieldValue.increment(1)
+		})
+	}
+	const finishGame = () =>{
+		db.collection('gamesID').doc(gameID).update({
+			isFinished : true,
 		})
 	}
 	return (
@@ -123,9 +124,10 @@ function VistaModerador() {
 					<br/>
 					<div className="admin__wrapper">
 						<button onClick={startGame} className="admin__btn start">Empezar</button>
-						
-						<button  className="admin__btn restart">Finalizar juego</button>
-						
+						<button onClick={restart} className="admin__btn">Clean</button>
+						<button onClick={newRound} className="admin__btn">Nueva Ronda</button>
+						<button onClick={finishGame} className="admin__btn restart">Finalizar juego</button>
+
 					</div>
 					<div className="admin__buttons">
 						<button onClick={addPointToTeam} value="Blue" class="admin__btn btn__blue">Punto Azul <br/>Puntos actuales: {gameStatus.pointsBlue}</button>

@@ -73,14 +73,9 @@
   animation-timing-function: ease;
 }
 
-
-
-@keyframes bounce-4 {
-  0%   { transform: scale(1,1)    translateY(0); }
-  10%  { transform: scale(1.1,.9) translateY(0); }
-  30%  { transform: scale(.9,1.1) translateY(-70px); }
-  50%  { transform: scale(1,1)    translateY(0); }
-  100% { transform: scale(1,1)    translateY(0); }
+.game__wrapperPoints{
+  margin-top: 30px;
+  text-align: center;
 }
 /* The animation code */
 @keyframes example {
@@ -90,34 +85,46 @@
   75%  {background-color:green; left:0px; top:200px;}
   100% {background-color:red; left:0px; top:0px;}
 }
-
-.game__wrapperPoints{
-  margin-top: 30px;
+@keyframes bounce-4 {
+  0%   { transform: scale(1,1)    translateY(0); }
+  10%  { transform: scale(1.1,.9) translateY(0); }
+  30%  { transform: scale(.9,1.1) translateY(-70px); }
+  50%  { transform: scale(1,1)    translateY(0); }
+  100% { transform: scale(1,1)    translateY(0); }
 }
 
 @keyframes Equipo_Rojo{  
-  from{
+  0%{
     background-color: #e74c3c;
   }
-  to{
-    background-color:#E4E4E4;
+  70%{
+    background-color: #e74c3c;
+  }
+  100%{
+    background-color: #E4E4E4;
   }
 }
 @keyframes Equipo_Verde{
-  from{
+  0%{
     background-color: #2ecc71;
   }
-  to{
-    background-color:#E4E4E4;
+  70%{
+    background-color: #2ecc71;
+  }
+  100%{
+    background: #E4E4E4;
   }
   
 }
 @keyframes Equipo_Azul{
-  from{
+  0%{
     background-color: #3498db;
   }
-  to{
-    background-color:#E4E4E4;
+  70%{
+    background-color:#3498db;
+  }
+  100%{
+    background-color: #E4E4E4;
   }
   
 }

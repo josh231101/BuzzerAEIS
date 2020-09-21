@@ -10,6 +10,7 @@ import beginSound from './sounds/start.mp3';
 import ding from './sounds/ding.mp3'
 import wrong from './sounds/wrong_answer.mp3';
 import trumpetSad from './sounds/sad_trompet.mp3';
+import loser_sound from './sounds/loserSound.mp3';
 
 function Game() {
     /*HOOKS*/
@@ -19,6 +20,7 @@ function Game() {
     const [gotPoint, hasGottenPoint] = useState("none");
     const [hasStarted, setStarted] = useState(false);
     const [hasWrongAnswer, setWrongAnswerTeam] = useState("none");
+    const [isFinished, setFinish] = useState(false);
     /*SOUNDS*/
     const [tap] = useSound(boopSfx);
     const [isLoggedin] = useSound(userIn);
@@ -26,6 +28,7 @@ function Game() {
     const [userPoint] = useSound(ding);
     const [wrongAnswer] = useSound(wrong);
     const [sadTrumpet] = useSound(trumpetSad);
+    const [loserSound] = useSound(loser_sound)
 
     const teamPoints = () =>{
         if(user){
@@ -48,10 +51,16 @@ function Game() {
                 setRound(snapshot.data().round);
                 setGameStatus(snapshot.data());
                 setWrongAnswerTeam(snapshot.data().hasWrongAnswer)  
+                setFinish(snapshot.data().isFinished);
             })
         }
     }, [isLoggedin])
 
+    useEffect(() => {
+        if( user && isFinished){
+            loserSound();
+        }
+    }, [isFinished])
     useEffect(() => {
         if(user){
             if(gotPoint != "none" || gotPoint != "undefined" || gotPoint != null){
@@ -65,7 +74,7 @@ function Game() {
                 }, 2500);
             }
         }
-    }, [gotPoint])
+    }, [gotPoint,gameStatus.pointsBlue,gameStatus.pointsGreen,gameStatus.pointsRed])
 
     useEffect(() => {
         if(hasWrongAnswer != null && hasWrongAnswer != "none"){
@@ -79,7 +88,7 @@ function Game() {
             setTimeout(() => {
                 document.body.style.backgroundColor = "#E4E4E4";
                 document.getElementById('teamPoint').innerHTML = ""
-            }, 2500);
+            }, 2000);
         }
     }, [hasWrongAnswer])
 

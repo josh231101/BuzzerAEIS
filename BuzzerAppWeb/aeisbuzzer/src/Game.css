@@ -1,3 +1,6 @@
+#teamPoint{
+  text-align: center;
+}
 .game{
     display: flex;
     justify-items: center;
@@ -33,6 +36,7 @@
     box-shadow: 10px 10px 10px 10px rgba(0,0,0,0.88);
     cursor: pointer;
   }
+  
   .button:active{
     position:relative;
     top:20px;

@@ -33,6 +33,7 @@ function VistaModerador() {
 			pointsGreen : 0,
 			round : 1,
 			isFinished : false,
+			winner : "none",
 		})
 		restart()
 	}
@@ -101,21 +102,19 @@ function VistaModerador() {
 			{teamPoints : gameStatus.pointsGreen, teamColor : "Equipo Verde"}, 
 			{teamPoints : gameStatus.pointsRed , teamColor : "Equipo Rojo"}
 		]
-		let winnerTeam = teamsPoints[0]
-		teamsPoints.map((team, iterator)=>{
-			if(team.teamPoints >= winnerTeam.teamPoints ){
-				if(team.teamPoints === winnerTeam.teamsPoints){
-
-						winnerTeam = {teamPoints : winnerTeam.teamPoints , teamColor : "Empate"}
-				}else{
-					winnerTeam = team
-				}
+		
+		teamsPoints.sort((a,b)=>{
+			if (a.teamPoints < b.teamPoints) {
+			  return 1;
 			}
-		})
-		console.log(winnerTeam);
+			if (a.teamPoints > b.teamPoints) {
+			  return -1;
+			}
+			return 0;
+		  });
 		db.collection('gamesID').doc(gameID).update({
 			isFinished : true,
-			winner : winnerTeam.teamColor
+			winner : teamsPoints[0].teamColor,
 		})
 	}
 	return (

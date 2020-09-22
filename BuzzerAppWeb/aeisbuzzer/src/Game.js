@@ -21,6 +21,7 @@ function Game() {
     const [hasStarted, setStarted] = useState(false);
     const [hasWrongAnswer, setWrongAnswerTeam] = useState("none");
     const [isFinished, setFinish] = useState(false);
+    const [winner , setWinner] = useState("none");
     /*SOUNDS*/
     const [tap] = useSound(boopSfx);
     const [isLoggedin] = useSound(userIn);
@@ -44,7 +45,9 @@ function Game() {
     }
     useEffect(() => {    
         if(user){
+            
             isLoggedin()
+            document.getElementById('teamPoint').innerHTML = "¡ESTÁS DENTRO!"
             db.collection('gamesID').doc(user.gameID).onSnapshot((snapshot)=>{
                 hasGottenPoint(snapshot.data().hasPoint)
                 setStarted(snapshot.data().canPlay);
@@ -52,15 +55,42 @@ function Game() {
                 setGameStatus(snapshot.data());
                 setWrongAnswerTeam(snapshot.data().hasWrongAnswer)  
                 setFinish(snapshot.data().isFinished);
+                setWinner(snapshot.data().winner)
             })
+            setTimeout(() => {
+                document.getElementById('teamPoint').innerHTML = ""
+            }, 2000);
         }
     }, [isLoggedin])
 
     useEffect(() => {
         if( user && isFinished){
-            loserSound();
+            switch(winner){
+                case "none" : 
+                    break
+                case user.team : 
+                    winnerTeamAnimation(winner);
+                    break
+                default : 
+                    loserTeamAnimation(winner);
+                    break
+            }
+            setTimeout(() => {
+                document.getElementById('teamPoint').innerHTML = ""
+            }, 8000);
         }
-    }, [isFinished])
+    }, [isFinished, winner])
+
+    const winnerTeamAnimation = (winner) =>{
+        beginPlay();
+        document.getElementById('teamPoint').innerHTML = `${winner} Gana. Felicidades!`
+    }
+    const loserTeamAnimation = (winner) => {
+        loserSound();
+        document.getElementById('teamPoint').innerHTML = `${winner} Gana. Suerte la próxima!`
+
+
+    }
     useEffect(() => {
         if(user){
             if(gotPoint != "none" || gotPoint != "undefined" || gotPoint != null){

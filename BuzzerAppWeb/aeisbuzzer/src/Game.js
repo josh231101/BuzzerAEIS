@@ -11,6 +11,7 @@ import ding from './sounds/ding.mp3'
 import wrong from './sounds/wrong_answer.mp3';
 import trumpetSad from './sounds/sad_trompet.mp3';
 import loser_sound from './sounds/loserSound.mp3';
+import startConfettiAnimation from './confetti.js';
 
 function Game() {
     /*HOOKS*/
@@ -83,6 +84,7 @@ function Game() {
 
     const winnerTeamAnimation = (winner) =>{
         beginPlay();
+        startConfettiAnimation();
         document.getElementById('teamPoint').innerHTML = `${winner} Gana. Felicidades!`
     }
     const loserTeamAnimation = (winner) => {
@@ -174,7 +176,7 @@ function Game() {
     }
 
     return (
-        <div className="game ">
+        <div className="game">
             
             {user ? (
                 <div className="game__wrapper"> 
@@ -185,6 +187,8 @@ function Game() {
                     <h2 className="game__wrapperPoints">{user.team} Puntos: {teamPoints()}</h2>
                     <h2 id="round" className="game__wrapperRound">Ronda: {round}</h2>
                     <h1 id="teamPoint"></h1>
+                    <canvas id="confetti"></canvas>
+
                 </div>
             ): (
                 <div>

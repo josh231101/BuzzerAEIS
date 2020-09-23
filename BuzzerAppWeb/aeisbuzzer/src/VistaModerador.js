@@ -15,14 +15,14 @@ function VistaModerador() {
 		gameID && db.collection('gamesID').doc(gameID).onSnapshot((snapshot)=>{
 			setGameStatus(snapshot.data())
 		})
-	}, [])
+	}, [gameID])
 	
 	useEffect(() => {
 		gameID && db.collection(`gamesID/${gameID}/playersBuzz`).orderBy("timestamp","asc").onSnapshot((snapshot) =>{
 			setPlayersBuzz(snapshot.docs.map(doc => ({id : doc.id,playerBuzz : doc.data() })))
 			
 		})
-	}, [])
+	}, [gameID])
 
 	const startGame = ()=>{
 		db.collection('gamesID').doc(gameID).update({

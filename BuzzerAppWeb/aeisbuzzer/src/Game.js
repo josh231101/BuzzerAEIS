@@ -184,7 +184,7 @@ function Game() {
                 <div className="game__wrapper"> 
                     
                     <div className={"game__button " + (gameStatus.canPlay && "start__game") }>
-                    <a onClick={gameStatus.canPlay ? sendUserParticipation : ()=>{}} className={"button" + " " + bgColor(user.team)}></a>
+                    <a onClick={gameStatus.canPlay ? sendUserParticipation : ()=>{}} className={`button ${bgColor(user.team)}`}></a>
                     </div>
                     <h2 className="game__wrapperPoints">{user.team} Puntos: {teamPoints()}</h2>
                     <h2 id="round" className="game__wrapperRound">Ronda: {round}</h2>

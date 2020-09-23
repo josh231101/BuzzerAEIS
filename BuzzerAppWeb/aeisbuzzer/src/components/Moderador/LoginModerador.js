@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import './loginModerador.css';
-import {db} from './firebase';
+import {db} from '../../db/firebase';
 import {useHistory} from 'react-router-dom';
-import {useStateValue} from './StateProvider';
+import {useStateValue} from '../../api/StateProvider';
 
 function LoginModerador() {
 	const [, dispatch] = useStateValue();

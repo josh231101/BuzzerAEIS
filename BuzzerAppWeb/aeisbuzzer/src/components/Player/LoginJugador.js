@@ -1,8 +1,8 @@
 import React,{useState, useEffect} from 'react';
 import {useHistory} from 'react-router-dom';
 import "./loginJugador.css";
-import {useStateValue} from './StateProvider';
-import {db} from './firebase';
+import {useStateValue} from '../../api/StateProvider';
+import {db} from '../../db/firebase';
 
 function LoginJugador() {
 	const [, dispatch] = useStateValue()

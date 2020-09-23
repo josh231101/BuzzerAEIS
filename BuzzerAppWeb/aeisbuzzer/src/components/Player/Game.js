@@ -1,17 +1,17 @@
 import React,{useState, useEffect} from 'react';
 import './Game.css';
-import {db} from './firebase';
-import {useStateValue} from './StateProvider';
+import {db} from '../../db/firebase';
+import {useStateValue} from '../../api/StateProvider';
 import { firestore } from 'firebase';
 import useSound from 'use-sound';
-import boopSfx from './sounds/bell_sound.mp3';
-import userIn from './sounds/airhorn.mp3';
-import beginSound from './sounds/start.mp3';
-import ding from './sounds/ding.mp3'
-import wrong from './sounds/wrong_answer.mp3';
-import trumpetSad from './sounds/sad_trompet.mp3';
-import loser_sound from './sounds/loserSound.mp3';
-import startConfettiAnimation from './confetti.js';
+import boopSfx from '../../sounds/bell_sound.mp3';
+import userIn from '../../sounds/airhorn.mp3';
+import beginSound from '../../sounds/start.mp3';
+import ding from '../../sounds/ding.mp3'
+import wrong from '../../sounds/wrong_answer.mp3';
+import trumpetSad from '../../sounds/sad_trompet.mp3';
+import loser_sound from '../../sounds/loserSound.mp3';
+import startConfettiAnimation from '../../utils/confetti.js';
 
 function Game() {
     /*HOOKS*/

@@ -1,9 +1,9 @@
 import React,{useState, useEffect} from 'react';
 import './vistaJugador.css';
-import {db} from './firebase';
+import {db} from '../../db/firebase';
 import firebase from 'firebase'
 import "./VistaModerador.css";
-import {useStateValue} from './StateProvider';
+import {useStateValue} from '../../api/StateProvider';
 import PlayerBuzz from './PlayerBuzz'
 
 function VistaModerador() { 

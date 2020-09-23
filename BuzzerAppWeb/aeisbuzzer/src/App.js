@@ -5,11 +5,11 @@ import {
   Route
 } from "react-router-dom";
 import './App.css';
-import Home from './Home';
-import LoginModerador from './LoginModerador';
-import LoginJugador from './LoginJugador';
-import VistaModerador from './VistaModerador';
-import Game from './Game';
+import Home from './components/Home';
+import LoginModerador from './components/Moderador/LoginModerador';
+import LoginJugador from './components/Player/LoginJugador';
+import VistaModerador from './components/Moderador/VistaModerador';
+import Game from './components/Player/Game';
 
 function App() {
   return (

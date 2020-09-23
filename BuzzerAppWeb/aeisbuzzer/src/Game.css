@@ -23,6 +23,9 @@
     background-color: black;
 
 }
+a{
+  z-index : 1000;
+}
 .button{
     width: 80%;
     height: 80%;
@@ -35,6 +38,7 @@
     color: #ecf0f1;
     box-shadow: 10px 10px 10px 10px rgba(0,0,0,0.88);
     cursor: pointer;
+    z-index: 1000;
   }
   
   .button:active{
@@ -133,18 +137,6 @@
   
 }
 
-/*Confetti Animation */
-i {
-  position: absolute;
-  display: block;
-  left: 50%;
-  top: 50%;
-  width: 5px;
-  height: 8px;
-  opacity: 0;
-  animation: bang 1.5s ease-out forwards;
- }
- 
  @keyframes bang {
    from {
      transform: translate3d(0,0,0);
@@ -156,4 +148,5 @@ i {
   top : 0;
   width: 100%;
   height: 100vh;
+  z-index: -1;
 }

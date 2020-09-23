@@ -1,13 +1,13 @@
 import React,{useState, useEffect} from 'react';
 import './vistaJugador.css';
 import {db} from './firebase';
-import firebase, { firestore } from 'firebase'
+import firebase from 'firebase'
 import "./VistaModerador.css";
 import {useStateValue} from './StateProvider';
 import PlayerBuzz from './PlayerBuzz'
 
 function VistaModerador() { 
-	const [{user,gameID}, dispatch] = useStateValue();
+	const [{_user ,gameID},] = useStateValue();
 	const [gameStatus, setGameStatus] = useState({});
 	const [playersBuzz, setPlayersBuzz] = useState([]);
 

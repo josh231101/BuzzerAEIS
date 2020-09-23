@@ -15,7 +15,7 @@ import startConfettiAnimation from './confetti.js';
 
 function Game() {
     /*HOOKS*/
-    const [ {user,gameID}, dispatch] = useStateValue();
+    const [ {user,},] = useStateValue();
     const [gameStatus, setGameStatus] = useState({});
     const [round, setRound] = useState();
     const [gotPoint, hasGottenPoint] = useState("none");
@@ -41,6 +41,7 @@ function Game() {
                     return gameStatus.pointsGreen
                 case 'Equipo Azul' : 
                     return gameStatus.pointsBlue
+                default: break;
             }
         }
     }
@@ -95,7 +96,7 @@ function Game() {
     }
     useEffect(() => {
         if(user){
-            if(gotPoint != "none" || gotPoint != "undefined" || gotPoint != null){
+            if(gotPoint !== "none" || gotPoint !== "undefined" || gotPoint !== null){
                 //SHOW THE WINNER OF THE POINT
                 updateTeamPoint(gotPoint)
                 document.body.style.animation =  `${gotPoint} 2000ms ease-in-out`;
@@ -109,8 +110,8 @@ function Game() {
     }, [gotPoint,gameStatus.pointsBlue,gameStatus.pointsGreen,gameStatus.pointsRed])
 
     useEffect(() => {
-        if(hasWrongAnswer != null && hasWrongAnswer != "none"){
-            if(user.team == hasWrongAnswer){
+        if(hasWrongAnswer !== null && hasWrongAnswer !== "none"){
+            if(user.team === hasWrongAnswer){
                 wrongAnswer();
                 document.body.style.backgroundColor = "#F30000";
             }else{
@@ -137,7 +138,7 @@ function Game() {
 
     useEffect(() => {
         /*IF HASSTARTED CHANGES ITS VALUE MAKE THIS EFFECT */
-        user && beginPlay()
+        user && hasStarted && beginPlay()
     }, [hasStarted])
 
     useEffect(() => {
@@ -159,6 +160,7 @@ function Game() {
                 return 'blue'
             case 'none':
                 return ""
+            default: break;
         }
     }
 

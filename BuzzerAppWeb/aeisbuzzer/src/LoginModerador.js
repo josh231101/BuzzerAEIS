@@ -1,11 +1,11 @@
 import React, {useState, useEffect} from 'react';
 import './loginModerador.css';
-import {db,auth,storage} from './firebase';
+import {db} from './firebase';
 import {useHistory} from 'react-router-dom';
 import {useStateValue} from './StateProvider';
 
 function LoginModerador() {
-	const [{user, gameID}, dispatch] = useStateValue();
+	const [, dispatch] = useStateValue();
 	const history = useHistory();
 	const [_id,setId] = useState("");
 	useEffect(() => {
@@ -43,7 +43,7 @@ function LoginModerador() {
 			<form onSubmit={createGameById}>
 			<label>ID del juego: <input required className="content__id" placeholder="6 digits" value={_id} onChange={(e) => setId(e.target.value)}></input></label>
 			<br/>
-			<button className="btn" type="submit" className="btn btn-info">Iniciar Juego</button>
+			<button type="submit" className="btn btn-info">Iniciar Juego</button>
 
 			</form>
 		</div>

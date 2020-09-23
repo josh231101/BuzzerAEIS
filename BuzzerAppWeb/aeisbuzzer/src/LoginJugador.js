@@ -2,10 +2,10 @@ import React,{useState, useEffect} from 'react';
 import {useHistory} from 'react-router-dom';
 import "./loginJugador.css";
 import {useStateValue} from './StateProvider';
-import {db,auth,storage} from './firebase';
+import {db} from './firebase';
 
 function LoginJugador() {
-	const [{user,gameID}, dispatch] = useStateValue()
+	const [, dispatch] = useStateValue()
 	const history = useHistory();
 	const [gameId, setGameId] = useState('');
 	const [playerName, setPlayerName] = useState('');
@@ -38,15 +38,15 @@ function LoginJugador() {
 			<hr/>
 			<form onSubmit={submitPlayer}>
 				<input 
-					placeHolder="Id del Juego" 
+					placeholder="Id del Juego" 
 					name="_idgame" 
-					autofocus required
+					autoFocus required
 					value={gameId} 
 					onChange={(e)=>setGameId(e.target.value)}>
 				</input>
 				<br/>
 				<input 
-					placeHolder="Nombre" 
+					placeholder="Nombre" 
 					name="playername" 
 					required={true}
 					value={playerName} 
@@ -55,7 +55,7 @@ function LoginJugador() {
 				</input>
 				<br/>
 				<select name="userteam" onChange={(e)=> setPlayerTeam(e.target.value)} required>
-					<option value="" disabled selected >Equipo</option>
+					<option value="" disabled selected>Equipo</option>
 					<option>Equipo Rojo</option>
 					<option>Equipo Verde</option>
 					<option>Equipo Azul</option>

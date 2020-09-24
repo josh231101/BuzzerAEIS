@@ -1,13 +1,13 @@
 .admin__wrapper{
     display: flex;
     margin-bottom: 2rem;
-    justify-content: space-evenly;
+    justify-content: space-around;
 }
 .start{
     background-color: 	#32CD32;
 }
 .restart{
-    background-color: yellow;
+    background-color: #FAD61D;
 }
 .admin__buttons{
     display: flex;

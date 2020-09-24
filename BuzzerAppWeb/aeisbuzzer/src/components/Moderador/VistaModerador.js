@@ -7,24 +7,29 @@ import {useStateValue} from '../../api/StateProvider';
 import PlayerBuzz from './PlayerBuzz'
 
 function VistaModerador() { 
-	const [{_user ,gameID},] = useStateValue();
+	const [{gameID},] = useStateValue();
 	const [gameStatus, setGameStatus] = useState({});
 	const [playersBuzz, setPlayersBuzz] = useState([]);
 
 	useEffect(() => {
+		//Connect in realtime to db, so when somehing changes update React components value
 		gameID && db.collection('gamesID').doc(gameID).onSnapshot((snapshot)=>{
 			setGameStatus(snapshot.data())
 		})
 	}, [gameID])
 	
 	useEffect(() => {
+		//If there is a gameID->Check if there is a change on the collection inside the gameID
+		//That collection has all of the users that have clicked the buzzer.Order them by timestamp
+		//Save the array of objects inside the playersBuzz hook
 		gameID && db.collection(`gamesID/${gameID}/playersBuzz`).orderBy("timestamp","asc").onSnapshot((snapshot) =>{
 			setPlayersBuzz(snapshot.docs.map(doc => ({id : doc.id,playerBuzz : doc.data() })))
-			
 		})
+
 	}, [gameID])
 
 	const startGame = ()=>{
+		//Set everything to begin the game, either case we start or play again
 		db.collection('gamesID').doc(gameID).update({
 			canPlay : true,
 			hasPoint : "none",
@@ -35,50 +40,30 @@ function VistaModerador() {
 			isFinished : false,
 			winner : "none",
 		})
-		restart()
+		clean()
 	}
-
-	const addPointToTeam = (e) => {
-		switch(e.target.value){
-			case 'Blue':
-				//DELETE ALL THE CLICKS LIST
-				restart()
-				db.collection('gamesID').doc(gameID).update({
-					hasPoint : "Equipo_Azul",
-					pointsBlue :  firebase.firestore.FieldValue.increment(1),
-					round : firebase.firestore.FieldValue.increment(1),
-					hasWrongAnswer : "none"
-				})
-				break;
-			case 'Red':
-				restart()
-				db.collection('gamesID').doc(gameID).update({
-					hasPoint : "Equipo_Rojo",
-					pointsRed :  firebase.firestore.FieldValue.increment(1),
-					round : firebase.firestore.FieldValue.increment(1),
-					hasWrongAnswer : "none"
-				})
-				break;
-			case 'Green':
-				restart()
-				db.collection('gamesID').doc(gameID).update({
-					hasPoint : "Equipo_Verde",
-					pointsGreen :  firebase.firestore.FieldValue.increment(1),
-					round : firebase.firestore.FieldValue.increment(1),
-					hasWrongAnswer : "none"
-				})
-				break;
-			/*TODO : ADD NEW COLOR TEAM*/
-			default:
-				break;
+	const getHasPoint = (pointToTeam) =>{
+		switch (pointToTeam) {
+			case "pointsBlue":	return "Equipo_Azul"	
+			case "pointsRed":	return "Equipo_Rojo"
+			case "pointsGreen":	return "Equipo_Verde"
+			default: return "none"
 		}
-		
+	}
+	const addPointToTeam = (e) => {
+		const pointToTeam = e.target.value;
+		const hasPoint = getHasPoint(pointToTeam);
+		clean()
+		db.collection('gamesID').doc(gameID).update({
+			hasPoint : hasPoint,
+			[pointToTeam] : firebase.firestore.FieldValue.increment(1),
+			round : firebase.firestore.FieldValue.increment(1),
+			hasWrongAnswer : "none"
+		})
 	}
 
-	const restart = () =>{
-		db.collection(`gamesID/${gameID}/playersBuzz`)
-  		.get()
-  		.then(res => {
+	const clean = () =>{
+		db.collection(`gamesID/${gameID}/playersBuzz`).get().then(res => {
     		res.forEach(element => {
       			element.ref.delete();
     		});
@@ -95,6 +80,7 @@ function VistaModerador() {
 		db.collection('gamesID').doc(gameID).update({
 			round : firebase.firestore.FieldValue.increment(1)
 		})
+		clean();
 	}
 	const finishGame = () =>{
 		const teamsPoints = [
@@ -102,7 +88,7 @@ function VistaModerador() {
 			{teamPoints : gameStatus.pointsGreen, teamColor : "Equipo Verde"}, 
 			{teamPoints : gameStatus.pointsRed , teamColor : "Equipo Rojo"}
 		]
-		
+		//Sort the teamsPoints to get the team with more points
 		teamsPoints.sort((a,b)=>{
 			if (a.teamPoints < b.teamPoints) {
 			  return 1;
@@ -123,36 +109,33 @@ function VistaModerador() {
 				(<div>
 					<h1>Id de la reunión: {gameID}</h1>
 					<hr/>
-					<div className="usersAnswer">
-					</div>
 					<label>Ronda:  {gameStatus.round}</label>
-					<br/>
-					
+					<br/>	
 					<label>Jugador:</label>
 					<br/>
 					<div className="playersbuzzer__wrapper">
-							{playersBuzz.map(({id, playerBuzz}) =>
-							<PlayerBuzz 
-								key={id} 
-								playerName={playerBuzz.userPlayer} 
-								playerTeam={playerBuzz.userTeam} /> 
-							)} 
-						</div>
+						{playersBuzz.map(({id, playerBuzz}) =>
+						<PlayerBuzz 
+							key={id} 
+							playerName={playerBuzz.userPlayer} 
+							playerTeam={playerBuzz.userTeam} /> 
+						)} 
+					</div>
 					<br/>
 					<br/>
 					<div className="admin__wrapper">
 						<button onClick={startGame} className="admin__btn start">Empezar</button>
-						<button onClick={restart} className="admin__btn">Clean</button>
+						<button onClick={clean} className="admin__btn">Clean</button>
 						<button onClick={newRound} className="admin__btn">Nueva Ronda</button>
 						<button onClick={finishGame} className="admin__btn restart">Finalizar juego</button>
 
 					</div>
 					<div className="admin__buttons">
-						<button onClick={addPointToTeam} value="Blue" class="admin__btn btn__blue">Punto Azul <br/>Puntos actuales: {gameStatus.pointsBlue}</button>
+						<button onClick={addPointToTeam} value="pointsBlue" class="admin__btn btn__blue">Punto Azul <br/>Puntos actuales: {gameStatus.pointsBlue}</button>
 						
-						<button onClick={addPointToTeam} value="Red" class="admin__btn btn__red">Punto Rojo <br/>Puntos actuales:{gameStatus.pointsRed}</button>
+						<button onClick={addPointToTeam} value="pointsRed" class="admin__btn btn__red">Punto Rojo <br/>Puntos actuales:{gameStatus.pointsRed}</button>
 						
-						<button onClick={addPointToTeam} value="Green" class="admin__btn btn__green">Punto Verde <br/>Puntos actuales:{gameStatus.pointsGreen}</button>
+						<button onClick={addPointToTeam} value="pointsGreen" class="admin__btn btn__green">Punto Verde <br/>Puntos actuales:{gameStatus.pointsGreen}</button>
 						
 					</div>
 					<div className="admin__buttons">
@@ -160,12 +143,13 @@ function VistaModerador() {
 						<button onClick={handleWrongAnswer} value="Equipo Rojo" className="admin__btn wrong__red">Rojo Incorrecto</button>
 						<button onClick={handleWrongAnswer} value="Equipo Verde" className="admin__btn wrong__green">Verde Incorrecto</button>
 					</div>
-				</div>)
-				 : (
-					 <div>
-						 <h1>You can not access this, please login</h1>
-						 <a className="btn" href="/loginModerador">Log-In</a>
-					 </div>
+				</div>
+				): 
+				(
+					<div>
+						<h1>You can not access this, please login</h1>
+						<a className="btn" href="/loginModerador">Log-In</a>
+					</div>
 				 )
 			
 			}

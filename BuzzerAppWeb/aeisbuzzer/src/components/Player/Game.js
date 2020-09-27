@@ -11,6 +11,7 @@ import ding from '../../sounds/ding.mp3'
 import wrong from '../../sounds/wrong_answer.mp3';
 import trumpetSad from '../../sounds/sad_trompet.mp3';
 import loser_sound from '../../sounds/loserSound.mp3';
+import winner_team from '../../sounds/ganador.mp3'
 import startConfettiAnimation from '../../utils/confetti.js';
 
 function Game() {
@@ -30,7 +31,8 @@ function Game() {
     const [userPoint] = useSound(ding);
     const [wrongAnswer] = useSound(wrong);
     const [sadTrumpet] = useSound(trumpetSad);
-    const [loserSound] = useSound(loser_sound)
+    const [loserSound] = useSound(loser_sound);
+    const [winnerTeam] = useSound(winner_team)
 
     const teamPoints = () =>{
         if(user){
@@ -46,9 +48,8 @@ function Game() {
         }
     }
     useEffect(() => {    
-        if(user){
-            
-            isLoggedin()
+        if(user){ 
+            isLoggedin()//Sound
             document.getElementById('teamPoint').innerHTML = "¡ESTÁS DENTRO!"
             db.collection('gamesID').doc(user.gameID).onSnapshot((snapshot)=>{
                 hasGottenPoint(snapshot.data().hasPoint)
@@ -60,6 +61,7 @@ function Game() {
                 setWinner(snapshot.data().winner)
             })
             setTimeout(() => {
+                //After 2secs reset the text to ""
                 document.getElementById('teamPoint').innerHTML = ""
             }, 2000);
         }
@@ -71,9 +73,11 @@ function Game() {
                 case "none" : 
                     break
                 case user.team : 
+                    //Winner from db is the user team
                     winnerTeamAnimation(winner);
                     break
                 default : 
+                    //Any other team
                     loserTeamAnimation(winner);
                     break
             }
@@ -84,7 +88,7 @@ function Game() {
     }, [isFinished, winner])
 
     const winnerTeamAnimation = (winner) =>{
-        beginPlay();
+        winnerTeam()
         startConfettiAnimation();
         document.getElementById('teamPoint').innerHTML = `${winner} Gana. Felicidades!`
     }
@@ -99,6 +103,7 @@ function Game() {
             if(gotPoint !== "none" || gotPoint !== "undefined" || gotPoint !== null){
                 //SHOW THE WINNER OF THE POINT
                 updateTeamPoint(gotPoint)
+                //Call the animation according to the team who got point ex. Equipo_Rojo
                 document.body.style.animation =  `${gotPoint} 2000ms ease-in-out`;
 
                 setTimeout(() => {
@@ -112,11 +117,14 @@ function Game() {
     useEffect(() => {
         if(hasWrongAnswer !== null && hasWrongAnswer !== "none"){
             if(user.team === hasWrongAnswer){
+                //The team with the wrong answer is the user team
                 wrongAnswer();
                 document.body.style.backgroundColor = "#F30000";
             }else{
+                //The user is not part of the team who got the wrong answer
                 sadTrumpet();
             }
+            //Either case show the incorrect team
             document.getElementById('teamPoint').innerHTML = `¡${hasWrongAnswer} Incorrecto!`
             setTimeout(() => {
                 document.body.style.backgroundColor = "#E4E4E4";
@@ -144,8 +152,6 @@ function Game() {
     useEffect(() => {
         user && userPoint()
     }, [teamPoints()])
-
-
 
     const bgColor = (team) => {    
         switch(team){
@@ -179,10 +185,9 @@ function Game() {
 
     return (
         <div className="game">
-            
             {user ? (
                 <div className="game__wrapper"> 
-                    
+
                     <div className={"game__button " + (gameStatus.canPlay && "start__game") }>
                     <a onClick={gameStatus.canPlay ? sendUserParticipation : ()=>{}} className={`button ${bgColor(user.team)}`}></a>
                     </div>

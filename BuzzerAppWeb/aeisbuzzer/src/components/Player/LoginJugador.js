@@ -13,7 +13,9 @@ function LoginJugador() {
 	
 	useEffect(() => {
         document.body.style.animation = "E4E4E4"
-    }, [])
+	}, [])
+	
+
 	const submitPlayer = (e) =>{
 		e.preventDefault();
 		//CHECK IF THE DOCUMENT INSIDE GAMESID EXISTS
@@ -30,8 +32,9 @@ function LoginJugador() {
 				alert("The Game ID is not in use. TRY AGAIN!")
 			}
 		})
-
 	}
+
+
 	return (
 		<div className="login__jugador" id="login__jugadorWrapper">
 			<h1 id="title">AEIS's Buzzer App</h1>

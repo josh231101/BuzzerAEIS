@@ -1,24 +1,3 @@
-/*const randomNumber = (min, max) => { 
-    return Math.floor(Math.random() * (max - min + 1) + min);
-}
-const startConfettiAnimation = () =>{    
-    let confetti = document.querySelectorAll('.confetti');
-    confetti.forEach(el => {
-        let titleWidth = window.innerWidth;
-        let totalConfetti = Math.floor(titleWidth / 10);
-        
-        for(var i = 0; i <= totalConfetti; i++) {
-        let confetto = "<i style='transform: translate3d(" + (randomNumber(1, 800) - 250) + "px, " + (randomNumber(1, 800) - 150) + "px, 0) rotate(" + randomNumber(1, 360) + "deg); background: hsla(" + randomNumber(1, 360) +", 100%, 50%, 1);'></i>"
-        el.insertAdjacentHTML("beforeend", confetto);
-        }
-    });
-
-    
-}*/
-/*SECOND TRY */
-
-// global variables
-
 const setConfettiAnimation = ()=>{
 
     const confetti = document.getElementById('confetti');
